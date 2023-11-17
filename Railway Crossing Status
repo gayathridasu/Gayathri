@@ -1,0 +1,1737 @@
+//index.jsp
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>User Login</title>
+</head>
+<body>
+<h3>Welcome to Railway Crossing!!!</h3>
+
+<a href="login.jsp">User Login</a><br><br>
+
+<a href="adminlogin.jsp">Admin Login</a>
+
+
+</body>
+</html>
+
+//login.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> <html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>User Login</title>
+
+</head>
+
+<body>
+
+<div align=center>
+
+<h2>User Login</h2>
+
+<form action="Login" method="POST">
+
+<table>
+
+<tr><td>Name: </td><td><input type="text" name="uname"
+
+placeholder="UserName" required></td></tr>
+
+<tr><td>Password: </td><td><input type="password" name="password"
+
+placeholder="password" required></td></tr><br><br>
+
+<tr><td><input type="submit" value="Login"><br><br><br>Don't have an
+
+account? <a href="Registration.jsp">Go to Register</a></td></tr>
+
+<tr><td><a href="index.jsp">Back<a></td></tr>
+
+</table>
+
+</form>
+
+</div>
+
+</body>
+
+</html>
+
+
+//Registration.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Register form</title>
+
+</head>
+
+<body>
+
+<form action="Register" method="post"> <div align=center>
+
+<h3>User Registration</h3>
+
+<table>
+
+<tr><td>Name: </td><td><input type="text" name="uname"
+
+placeholder="UserName" required></td></tr>
+
+<tr><td>Email: </td><td><input type="text" name="email" placeholder="Email" required></td></tr>
+
+<tr><td>Password: </td><td><input type="password" name="password"
+
+placeholder="password" required></td></tr><br><br>
+
+<tr><td></td><td><input type="submit" value="register"><br><br>Already
+
+Registered?<a href="login.jsp">Go to login</a></td></tr>
+
+</table>
+ 
+</div>
+
+</form>
+
+</body>
+
+</html>
+
+//adminlogin.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> <html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>User Login</title>
+
+</head>
+
+<body>
+
+<div align=center>
+
+<h2>Admin Login</h2>
+
+<form action="AdminLogin" method="POST"> <table>
+
+<tr><td>Name: </td><td><input type="text" name="uname"
+
+placeholder="UserName" required></td></tr>
+
+<tr><td>Password: </td><td><input type="password" name="password" placeholder="password" required></td></tr>
+
+<tr><td></td><td><input type="submit" value="Login"><br><br><br>Don't have an account?<a href="Registration.jsp">Sign In</a></td></tr> </table>
+
+</form>
+
+</div>
+
+</body>
+
+</html>
+
+//adminhome.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import = "java.io.*,java.util.*,java.sql.*"%>
+
+<%@ page import = "javax.servlet.http.*,javax.servlet.*" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix = "c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Admin Home</title>
+
+</head>
+
+<body>
+
+<h2>Admin Home</h2>
+
+<a href="adminhome.jsp">Home</a><br>
+
+<a href="addrail.jsp">Add Railway Crossing</a><br>
+ 
+<a href="search.jsp">Search Crossing</a><br><br>
+
+<sql:setDataSource var = "snapshot" driver = "com.mysql.jdbc.Driver"
+
+url = "jdbc:mysql://localhost:3306/railway"
+
+user = "root" password = "Gayathri@321"/>
+
+<sql:query dataSource="${snapshot}" var="result"> SELECT * from adminhome;
+
+</sql:query>
+
+<table border="1" width="100%">
+
+<tr>
+
+<th>Sr.No</th>
+
+<th>Name</th>
+
+<th>Address</th>
+
+<th>Landmark</th>
+
+<th>Time Schedule</th>
+
+<th>Person In-Charge</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+<c:forEach var="row" items="${result.rows}"> <tr>
+
+<td><c:out value="${row.id}" /></td>
+
+<td><c:out value="${row.Name}" /></td>
+
+<td><c:out value="${row.Address}" /></td>
+
+<td><c:out value="${row.Landmark}" /></td>
+
+<td><c:out value="${row.Trainschedule}" /></td>
+
+<td><c:out value="${row.pname}" /></td>
+
+<td><c:out value="${row.status}" /></td>
+
+<td>
+
+<!-- Action buttons for each row -->
+
+<form action="update.jsp" method="GET">
+
+<input type="hidden" name="id" value="${row.id}" /> <input type="submit" value="Update" /> </form>
+
+<form action="delete.jsp" method="POST">
+
+<input type="hidden" name="id" value="${row.id}" /> <input type="submit" value="Delete" />
+
+</form>
+
+</td>
+
+</tr>
+
+</c:forEach>
+
+</table>
+
+</body>
+
+</html>
+
+
+//addrail.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ 
+<title>Add Railway Crossing</title>
+
+</head>
+
+<body>
+
+<h2>Add Railway Crossing</h2>
+
+
+
+<form action="RailCrossing" method="POST"> <table>
+
+<tr>
+
+<td>Name:</td>
+
+<td><input type="text" name="Name" required></td>
+
+</tr>
+
+<tr>
+
+<td>Address:</td>
+
+<td><input type="text" name="Address" required></td>
+
+</tr>
+
+<tr>
+
+<td>Landmark:</td>
+
+<td><input type="text" name="Landmark" required></td>
+
+</tr>
+
+<tr>
+
+<td>Time Schedule:</td>
+
+<td><input type="time" name="Trainschedule" required></td>
+
+</tr>
+
+<tr>
+
+<td>Person In-Charge:</td>
+
+<td><input type="text" name="pname" required></td> </tr>
+
+<tr>
+
+<td>Status:</td>
+
+<td>
+
+<input type="radio" name="status" value="open" required> open
+
+<input type="radio" name="status" value="closed" required> closed
+
+</td>
+
+</tr>
+
+<tr>
+
+<td><input type="submit" value="Add Crossing"></td> </tr>
+
+</table>
+
+</form>
+
+</body>
+
+</html>
+
+
+//update.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+ 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>Update Railway Crossing</title> </head>
+
+<body>
+
+<h2>Update Railway Crossing</h2>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+
+url="jdbc:mysql://localhost:3306/railway" user="root" password="Gayathri@321" />
+
+<c:if test="${not empty param.id}">
+
+<sql:query dataSource="${snapshot}" var="result"> SELECT * FROM adminhome WHERE id = ?
+
+<sql:param value="${param.id}" />
+
+</sql:query>
+
+
+
+<c:if test="${not empty result.rows}">
+
+<c:forEach var="row" items="${result.rows}">
+
+<form action="updateProcess.jsp" method="POST">
+
+<input type="hidden" name="id" value="${row.id}" />
+
+<table>
+
+<tr>
+
+<td>Name:</td>
+
+<td><input type="text" name="Name" value="${row.Name}" required></td>
+
+</tr>
+
+<tr>
+
+<td>Address:</td>
+
+<td><input type="text" name="Address" value="${row.Address}" required></td> </tr>
+
+<tr>
+
+<td>Landmark:</td>
+
+<td><input type="text" name="Landmark" value="${row.Landmark}"
+
+required></td>
+
+</tr>
+
+<tr>
+
+<td>Time Schedule:</td>
+
+<td><input type="time" name="Trainschedule" value="${row.Trainschedule}" required></td>
+
+</tr>
+
+<tr>
+
+<td>Person In-Charge:</td>
+
+<td><input type="text" name="pname" value="${row.pname}" required></td>
+
+</tr>
+
+<tr>
+
+<td>Status:</td>
+
+<td>
+
+<input type="radio" name="status" value="open" ${row.status == 'open' ? 'checked' : ''} required> Open
+
+<input type="radio" name="status" value="closed" ${row.status == 'closed' ? 'checked' : ''} required> Closed
+
+</td>
+
+</tr>
+
+<tr>
+
+<td><input type="submit" value="Update Crossing"></td>
+
+</tr>
+
+</table>
+
+</form>
+ 
+</c:forEach>
+
+</c:if>
+
+</c:if>
+
+</body>
+
+</html>
+
+//updateprocess.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <title>Update Crossing Process</title> </head>
+
+<body>
+
+<h2>Update Crossing Process</h2>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+
+url="jdbc:mysql://localhost:3306/railway" user="root" password="Gayathri@321" />
+
+<c:if test="${not empty param.id}">
+
+<sql:update dataSource="${snapshot}">
+
+UPDATE adminhome SET Name=?, Address=?, Landmark=?, Trainschedule=?,
+
+pname=?, status=?
+
+WHERE id=?
+
+<sql:param value="${param.Name}" />
+
+<sql:param value="${param.Address}" />
+
+<sql:param value="${param.Landmark}" />
+
+<sql:param value="${param.Trainschedule}" />
+
+<sql:param value="${param.pname}" />
+
+<sql:param value="${param.status}" />
+
+<sql:param value="${param.id}" />
+
+</sql:update>
+
+<p>Update successful!</p>
+
+</c:if>
+
+<a href="adminhome.jsp">Back to Admin Home</a>
+
+</body>
+
+</html>
+
+//delete.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%> <!DOCTYPE html>
+ 
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Delete Record</title>
+
+</head>
+
+<body>
+
+<h2>Delete Record</h2>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+
+url="jdbc:mysql://localhost:3306/railway" user="root" password="Gayathri@321" />
+
+
+
+<c:if test="${not empty param.id}">
+
+<sql:query dataSource="${snapshot}" var="result"> SELECT * FROM adminhome WHERE id = ?
+
+<sql:param value="${param.id}" />
+
+</sql:query>
+
+
+<c:if test="${not empty result.rows}">
+
+<c:forEach var="row" items="${result.rows}">
+
+<form action="deleteProcess.jsp" method="POST">
+
+<input type="hidden" name="id" value="${row.id}" /> <label for="id">Record Sr.No:</label>
+
+<input type="text" id="id" name="id" value="${row.id}" required><br><br> <input type="submit" value="Confirm Delete"> </form>
+
+</c:forEach>
+
+</c:if>
+
+</c:if>
+
+</body>
+
+</html>
+
+//deleteProcess.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page import="java.io.*,java.util.*,java.sql.*" %>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*" %>
+
+
+<%
+
+String id = request.getParameter("id");
+
+
+// Check if ID is provided
+
+if (id != null && !id.isEmpty()) {
+
+try {
+
+// Database connection details
+
+String url = "jdbc:mysql://localhost:3306/railway"; 
+String user = "root";
+
+String password = "Gayathri@321";
+ 
+
+
+// Create database connection
+
+Connection conn = DriverManager.getConnection(url, user, password);
+
+
+// Prepare and execute the delete statement
+
+String sql = "DELETE FROM adminhome WHERE id = ?";
+
+PreparedStatement pstmt = conn.prepareStatement(sql);
+
+pstmt.setString(1, id);
+
+pstmt.executeUpdate();
+//close resource
+pstmt.close(); 
+conn.close();
+
+
+
+
+
+
+//	Redirect back to delete.jsp with success message 
+response.sendRedirect("delete.jsp?success=true"); 
+} 
+catch (SQLException e) 
+{
+	e.printStackTrace();
+
+
+
+response.sendRedirect("delete.jsp?error=true"); 
+
+}
+
+}
+else 
+{
+
+//	ID is not provided, redirect back to delete.jsp with error message 
+response.sendRedirect("delete.jsp?error=true");
+
+}
+
+%>
+
+
+
+//userhome.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%> <!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>User Home</title>
+
+<style>
+
+.header {
+
+text-align: center;
+
+margin-bottom: 20px;
+
+}
+
+.link {
+
+display: block;
+
+margin-bottom: 10px;
+ 
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h2>User Home</h2>
+
+<a class="link" href="userhome.jsp">Home</a>
+
+<a class="link" href="search.jsp">Search Crossing</a>
+
+<a class="link" href="favorite.jsp">Favorite Crossing</a>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+
+url="jdbc:mysql://localhost:3306/railway" user="root" password="Gayathri@321" />
+
+
+
+<sql:query dataSource="${snapshot}" var="result"> SELECT * FROM adminhome;
+
+</sql:query>
+
+
+
+<c:forEach var="row" items="${result.rows}"> <div>
+
+<h4>Name: <c:out value="${row.Name}" /></h4>
+
+<p>Address: <c:out value="${row.Address}" /></p>
+
+<p>Landmark: <c:out value="${row.Landmark}" /></p>
+
+<p>Time Schedule: <c:out value="${row.Trainschedule}" /></p>
+
+<p>Person In-Charge: <c:out value="${row.pname}" /></p>
+
+<p>Status: <c:out value="${row.status}" /></p> <form action="AddToFavorite" method="POST">
+
+<input type="hidden" name="itemId" value="${row.id}" />
+
+<input type="submit" value="Add to Favorite" />
+
+</form>
+
+</div>
+
+<hr />
+
+</c:forEach>
+
+<a class="link" href="login.jsp">Logot</a>
+
+</body>
+
+</html>
+
+//search.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page import="java.io.*, java.util.*, java.sql.*" %> <%@ page import="javax.servlet.http.*, javax.servlet.*" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Search Crossing</title>
+
+</head>
+
+<body>
+
+<h2>Search Crossing</h2>
+
+<form action="searchResult.jsp" method="GET">
+
+<input type="text" name="keyword" placeholder="Enter keyword" />
+ 
+<input type="submit" value="Search" />
+
+</form>
+
+</body>
+
+</html>
+
+//searchResult.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
+<%@ page import="java.io.*, java.util.*, java.sql.*" %> <%@ page import="javax.servlet.http.*, javax.servlet.*" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Search Results</title>
+
+</head>
+
+<body>
+
+<h2>Search Results</h2>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.cj.jdbc.Driver"
+
+url="jdbc:mysql://localhost:3306/railway" user="root" password="Gayathri@321" />
+
+<c:set var="keyword" value="${param.keyword}" /> <sql:query dataSource="${snapshot}" var="result"> SELECT * FROM adminhome
+
+WHERE Name LIKE CONCAT('%', ?, '%') OR Address LIKE CONCAT('%', ?, '%')
+
+<sql:param value="${keyword}" />
+
+<sql:param value="${keyword}" />
+
+</sql:query>
+
+<table border="1" width="100%">
+
+<tr>
+
+<th>Sr.No</th>
+
+<th>Name</th>
+
+<th>Address</th>
+
+<th>Landmark</th>
+
+<th>Time Schedule</th>
+
+<th>Person In-Charge</th>
+
+<th>Status</th>
+
+</tr>
+
+<c:forEach var="row" items="${result.rows}"> <tr>
+
+<td><c:out value="${row.id}" /></td>
+
+<td><c:out value="${row.Name}" /></td>
+
+<td><c:out value="${row.Address}" /></td>
+
+<td><c:out value="${row.Landmark}" /></td>
+
+<td><c:out value="${row.Trainschedule}" /></td>
+
+<td><c:out value="${row.pname}" /></td>
+
+<td><c:out value="${row.status}" /></td>
+
+</tr>
+
+</c:forEach>
+
+</table>
+
+</body>
+
+</html>
+
+//favorite.jsp
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ page import="java.io.*,java.util.*,java.sql.*"%>
+
+<%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%> <!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Favorite Crossing</title>
+
+</head>
+
+<body>
+
+<h2>Favorite Crossing</h2>
+
+<a href="userhome.jsp">Home</a><br>
+
+<a href="search.jsp">Search Crossing</a><br><br>
+
+<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
+
+url="jdbc:mysql://localhost:3306/railway" user="root" password="Gayathri@321" />
+
+
+
+<sql:query dataSource="${snapshot}" var="favorites"> SELECT * FROM favorites;
+
+</sql:query>
+
+
+
+<c:if test="${not empty favorites.rows}"> <table border="1" width="100%"> <tr>
+
+<th>Sr.No</th>
+
+<th>Name</th>
+
+<th>Address</th>
+
+<th>Landmark</th>
+
+<th>Time Schedule</th>
+
+<th>Person In-Charge</th>
+
+<th>Status</th>
+
+</tr>
+
+<c:forEach var="favorite" items="${favorites.rows}"> <tr>
+
+<td><c:out value="${favorite.id}" /></td>
+
+<td><c:out value="${favorite.Name}" /></td>
+
+<td><c:out value="${favorite.Address}" /></td>
+
+<td><c:out value="${favorite.Landmark}" /></td>
+
+<td><c:out value="${favorite.Trainschedule}" /></td>
+
+<td><c:out value="${favorite.pname}" /></td>
+
+<td><c:out value="${favorite.status}" /></td>
+
+</tr>
+
+</c:forEach>
+
+</table>
+
+</c:if>
+
+<c:if test="${empty favorites.rows}">
+
+<p>No favorite crossings.</p>
+ 
+</c:if>
+
+</body>
+
+</html>
+
+
+//AdminLogin.java(Servlet)
+package adminlogin;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+import java.sql.Connection;
+
+import java.sql.DriverManager;
+
+import java.sql.PreparedStatement;
+
+import java.sql.ResultSet;
+
+import java.sql.SQLException;
+
+
+
+import javax.servlet.RequestDispatcher; 
+import javax.servlet.ServletException; 
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/AdminLogin")
+
+public class AdminLogin extends HttpServlet
+{
+	private static final long serialVersionUID = 1L; 
+	public AdminLogin() {
+
+		super();
+
+	}
+
+
+
+
+
+
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+try{
+
+PrintWriter out= response.getWriter();
+Class.forName("com.mysql.cj.jdbc.Driver"); 
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/railway","root ","Gayathri@321");
+
+String uname = request.getParameter("uname"); 
+String pass = request.getParameter("password");
+
+PreparedStatement ps = con.prepareStatement("SELECT uname FROM admin WHERE uname=? AND password=?");
+
+ps.setString(1,uname);
+
+ps.setString(2,pass);
+
+ResultSet rs = ps.executeQuery();
+ 
+
+if(rs.next()) {
+
+RequestDispatcher rd = request.getRequestDispatcher("adminhome.jsp");
+
+rd.forward(request, response);
+
+}
+
+else {
+
+out.println("<font color=red size=4>Login Failed!!!<br>");
+
+out.println("<font color=red size=2>Invalid user name or password<br>"); 
+out.println("<a href=login.jsp>Try Again</a>"); }
+
+}catch (ClassNotFoundException e) {
+
+e.printStackTrace();
+
+} catch (SQLException e) {
+
+//	TODO Auto-generated catch block
+	e.printStackTrace();
+
+}
+
+}
+
+}
+
+
+//AddToFavorite.java(Servlet)
+package favorite;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException; 
+import javax.servlet.annotation.WebServlet; 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection; 
+import java.sql.DriverManager;
+
+import java.sql.PreparedStatement;
+
+import java.sql.SQLException;
+
+
+@WebServlet("/AddToFavorite")
+
+public class AddToFavorite extends HttpServlet {
+
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+
+throws ServletException, IOException {
+
+String itemId = request.getParameter("itemId");
+
+
+
+//	Perform necessary operations to add the item to favorites 
+try {
+
+//	Establish database connection
+
+Class.forName("com.mysql.jdbc.Driver"); 
+Connection connection =DriverManager.getConnection("jdbc:mysql://localhost:3306/railway", "root", "Gayathri@321");
+
+
+// Prepare SQL statement to insert the favorite crossing
+ 
+String sql = "INSERT INTO favorites (id, Name, Address, Landmark, Trainschedule, pname, status) " +
+
+"SELECT id, Name, Address, Landmark, Trainschedule, pname, status " + "FROM adminhome WHERE id = ?";
+
+PreparedStatement statement = connection.prepareStatement(sql); 
+statement.setString(1, itemId);
+
+
+// Execute the SQL statement
+
+int rowsAffected = statement.executeUpdate();
+
+
+
+//	Close the database connection 
+statement.close(); 
+connection.close();
+
+
+
+//	Redirect the user back to the user home page 
+response.sendRedirect("userhome.jsp");
+
+} catch (ClassNotFoundException | SQLException e)
+{ 
+	e.printStackTrace();
+
+}
+
+}
+
+}
+
+
+//Login.java(servlet)
+package login;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+import java.io.IOException;
+
+import java.io.PrintWriter;
+
+import java.sql.Connection;
+
+import java.sql.DriverManager;
+
+import java.sql.PreparedStatement;
+
+import java.sql.ResultSet;
+
+import java.sql.SQLException;
+
+
+
+import javax.servlet.RequestDispatcher;
+
+import javax.servlet.ServletException;
+
+import javax.servlet.annotation.WebServlet;
+ 
+import javax.servlet.http.HttpServlet;
+
+import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpServletResponse;
+
+
+
+@WebServlet("/Login")
+
+public class Login extends HttpServlet {
+
+private static final long serialVersionUID = 1L;
+
+
+
+public Login() {
+
+super();
+
+
+
+}
+
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+try {
+
+PrintWriter out= response.getWriter();
+
+Class.forName("com.mysql.cj.jdbc.Driver");
+
+Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/railway","root","Gayathri@321");
+
+
+
+String uname = request.getParameter("uname");
+
+String pass = request.getParameter("password");
+
+PreparedStatement ps = con.prepareStatement("SELECT uname FROM user WHERE uname=? AND password=?");
+
+ps.setString(1,uname);
+
+ps.setString(2,pass);
+
+ResultSet rs = ps.executeQuery();
+
+
+
+if(rs.next()) {
+
+RequestDispatcher rd = request.getRequestDispatcher("userhome.jsp");
+
+rd.forward(request, response);
+
+}
+ 
+else {
+
+out.println("<font color=red size=4>Login Failed!!!<br>"); 
+out.println("<font color=red size=2>Invalid user name or password<br>"); 
+out.println("<a href=login.jsp>Try Again</a>"); }
+
+}catch (ClassNotFoundException e) {
+
+e.printStackTrace();
+
+} catch (SQLException e) {
+
+//	TODO Auto-generated catch block 
+	e.printStackTrace();
+
+}
+
+}
+
+private PreparedStatement prepareStatement(String string) {
+
+//	TODO Auto-generated method stub
+
+return null;
+
+}
+
+
+
+}
+
+//RailCrossing.java(servlet)
+package rail;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import java.sql.SQLException;
+import java.sql.Time;
+import javax.servlet.ServletException; import javax.servlet.annotation.WebServlet; import javax.servlet.http.HttpServlet; import javax.servlet.http.HttpServletRequest; import javax.servlet.http.HttpServletResponse;
+@WebServlet("/RailCrossing")
+public class RailCrossing extends HttpServlet { private static final long serialVersionUID = 1L;
+private String dbUrl = "jdbc:mysql://localhost:3306/railway"; private String dbUsername = "root"; private String dbPassword = "Anusha@2000";
+private String dbDriver = "com.mysql.cj.jdbc.Driver";
+ protected void doPost(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException { String name = request.getParameter("Name");
+String address = request.getParameter("Address");
+String landmark = request.getParameter("Landmark");
+String trainSchedule = request.getParameter("Trainschedule");
+String personInCharge = request.getParameter("pname");
+String status = request.getParameter("status");
+RailCross railCrossing = new RailCross(name, address, landmark, trainSchedule, personInCharge,status);
+String result = insertRailCrossing(railCrossing); response.getWriter().print(result); }
+private String insertRailCrossing(RailCross railCrossing) { try {
+Class.forName(dbDriver);
+Connection connection = DriverManager.getConnection(dbUrl, dbUsername, dbPassword);
+String sql = "INSERT INTO adminhome (Name, Address, Landmark, Trainschedule, pname, status) VALUES (?, ?, ?, ?, ?, ?)";
+PreparedStatement statement = connection.prepareStatement(sql);
+statement.setString(1, railCrossing.getName());
+statement.setString(2, railCrossing.getAddress()); 
+statement.setString(3, railCrossing.getLandmark());
+statement.setString(4, railCrossing.getTrainSchedule());
+statement.setString(5, railCrossing.getPersonInCharge());
+statement.setString(6, railCrossing.getStatus());
+int rowsInserted = statement.executeUpdate(); if (rowsInserted > 0) {
+return "Data inserted successfully";
+} else {
+return "Failed to insert data";
+}
+} catch (ClassNotFoundException | SQLException e) { e.printStackTrace();
+return "Error: " + e.getMessage();
+}
+}
+}
+//Register.java(servlet)
+package register;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+
+import javax.servlet.http.HttpServletResponse;
+/**
+*	Servlet implementation class Register */
+@WebServlet("/Register")
+public class Register extends HttpServlet { private static final long serialVersionUID = 1L;
+
+/**
+*	@see HttpServlet#HttpServlet() */
+public Register() { super();
+//	TODO Auto-generated constructor stub
+}
+/**
+* @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+ */
+protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+// TODO Auto-generated method stub
+response.getWriter().append("Served at: ").append(request.getContextPath());
+}
+/**
+*	@see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response) */
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+// TODO Auto-generated method stub
+String uname = request.getParameter("uname");
+String password = request.getParameter("password");
+String email = request.getParameter("email");
+Member user = new Member(uname, password, email);
+RegisterDao rDao = new RegisterDao();
+String result = rDao.insert(user);
+response.getWriter().print(result);
+}}
+//RailCross
+
+package rail;
+
+import java.sql.Time;
+
+
+public class RailCross {
+
+private String name;
+
+private String address;
+
+private String landmark;
+
+private String trainSchedule;
+
+private String personInCharge;
+
+private String status;
+ 
+public RailCross(String name, String address, String landmark, String trainSchedule, String personInCharge, String status) {
+
+this.name = name;
+
+this.address = address;
+
+this.landmark = landmark;
+
+this.trainSchedule = trainSchedule;
+
+this.personInCharge = personInCharge;
+
+this.status = status;
+
+}
+
+
+// Getters and setters
+
+
+
+public String getName() {
+
+return name;
+
+}
+
+
+public void setName(String name) {
+
+this.name = name;
+
+}
+
+
+
+public String getAddress() {
+
+return address;
+
+}
+
+
+
+public void setAddress(String address) 
+{
+	this.address = address; }
+
+
+
+
+public String getLandmark() {
+
+return landmark;
+
+}
+
+
+
+public void setLandmark(String landmark)
+{
+	this.landmark = landmark; }
+
+
+
+
+public String getTrainSchedule() {
+
+return trainSchedule;
+
+}
+
+
+
+public void setTrainSchedule(String trainSchedule) 
+{
+	this.trainSchedule = trainSchedule; }
+ 
+
+
+public String getPersonInCharge() {
+
+return personInCharge;
+
+}
+
+
+
+public void setPersonInCharge(String personInCharge)
+{
+	this.personInCharge = personInCharge;
+
+}
+
+
+
+public String getStatus() {
+
+return status;
+
+}
+
+
+
+public void setStatus(String status) { this.status = status; }
+
+}
+
+
+//Member
+package register;
+
+public class Member {
+	
+
+
+private String uname, password, email;
+
+
+
+
+public Member() {
+
+super();
+
+}
+
+
+
+public Member(String uname, String password, String email) { super();
+
+this.uname = uname;
+
+this.password = password;
+
+this.email = email;
+
+}
+
+
+public String getUname() {
+
+return uname;
+
+}
+
+
+
+public void setUname(String uname) {
+
+this.uname = uname;
+
+}
+
+
+
+public String getPassword() {
+
+return password;
+
+}
+
+
+
+public void setPassword(String password) { this.password = password; }
+
+
+
+
+public String getEmail() {
+
+return email;
+
+}
+
+
+
+public void setEmail(String email) {
+
+this.email = email;
+
+}
+ 
+
+
+}
+
+//RegisterDao
+package register;
+
+
+	import java.sql.Connection;
+
+	import java.sql.DriverManager;
+	 
+	import java.sql.PreparedStatement;
+
+	import java.sql.SQLException;
+
+
+	public class RegisterDao {
+
+	private String dbUrl = "jdbc:mysql://localhost:3306/railway"; private String dbUname = "root";
+
+	private String dbPassword = "Gayathri@321";
+
+	private String dbDriver = "com.mysql.cj.jdbc.Driver";
+
+	public void loadDriver(String dbDriver)
+
+	{
+
+	try {
+
+	Class.forName(dbDriver);
+
+	} catch (ClassNotFoundException e) { 
+		// TODO Auto-generated catch block 
+		e.printStackTrace();
+
+	}
+
+	}
+
+	public Connection getConnection()
+
+	{
+
+	Connection con = null;
+
+	try {
+
+	con = DriverManager.getConnection(dbUrl, dbUname, dbPassword); } catch (SQLException e) {
+
+//		TODO Auto-generated catch block 
+		e.printStackTrace();
+
+	}
+
+	return con;
+
+	}
+
+
+
+	public String insert(Member member)
+
+	{
+
+	loadDriver(dbDriver);
+
+	Connection con = getConnection();
+
+	String result = "Data entered successfully"; 
+	String sql = "insert into user values(?,?,?)";
+
+	PreparedStatement ps;
+
+	try {
+
+	ps = con.prepareStatement(sql);
+
+	ps.setString(1, member.getUname());
+	ps.setString(2, member.getPassword());
+	ps.setString(3, member.getEmail());
+	ps.executeUpdate();
+	} catch (SQLException e) {
+
+//		TODO Auto-generated catch block e.printStackTrace();
+
+	result = "Data not entered";
+
+	}
+
+	return result;
+
+	}
+
+	}
+
+//mysql code
+create database railways;
+use railways;
+CREATE TABLE user(
+
+uname VARCHAR(45) NOT NULL,
+email VARCHAR(45) NOT NULL,
+password VARCHAR(45) NOT NULL,
+PRIMARY KEY (uname));
+
+INSERT INTO user (uname, email, password)
+VALUES ('jane_smith', 'jane@example.com', 'password456');
+
+INSERT INTO user (uname, email, password)
+VALUES ('alex_wilson', 'alex@example.com', 'qwerty123');
+
+INSERT INTO user (uname, email, password)
+VALUES ('emma_davis', 'emma@example.com', 'abcd1234');
+
+INSERT INTO user (uname, email, password)
+VALUES ('annu', 'annu@gmail.com', 'annu123');
+
+INSERT INTO user (uname, email, password)
+VALUES ('anusha', 'anusha@gmail.com', 'anu123');
+
+CREATE TABLE admin (
+uname VARCHAR(45) NOT NULL,
+password VARCHAR(45) NOT NULL,
+PRIMARY KEY (uname));
+
+insert into admin values ('Admin', '1234567');
+insert into admin values ('Priyanth', '12345');
+insert into admin values ('Pandu','123456');
+insert into admin values ('Aliya', '12345678');
+
+
+CREATE TABLE railways.adminhome(
+id INT NOT NULL auto_increment , Name VARCHAR(45) NOT NULL,
+Address VARCHAR(45) NOT NULL,
+Landmark VARCHAR(45) NOT NULL, Trainschedule TIME NOT NULL,
+pname VARCHAR(45) NOT NULL,
+status VARCHAR(45) NOT NULL, 
+UNIQUE INDEX id_Unique (id ASC) VISIBLE,
+PRIMARY KEY(id));
+
+INSERT INTO railways.adminhome (Name, Address, Landmark, Trainschedule, pname, status)
+VALUES ('John', '123 Main St', 'Central Park', '09:00:00', 'Project A', 'Active');
+
+INSERT INTO railways.adminhome (Name, Address, Landmark, Trainschedule, pname, status)
+VALUES ('Jane', '456 Elm St', 'Downtown Square', '13:30:00', 'Project B', 'Inactive');
+
+INSERT INTO railways.adminhome (Name, Address, Landmark, Trainschedule, pname, status)
+VALUES ('Alex', '789 Oak St', 'City Center', '18:45:00', 'Project C', 'Active');
+
+INSERT INTO railways.adminhome (Name, Address, Landmark, Trainschedule, pname, status)
+VALUES ('Emma', '567 Pine St', 'West End', '22:15:00', 'Project D', 'Inactive');
+
+CREATE TABLE favorites ( Address VARCHAR(255),
+id INT PRIMARY KEY,
+Name VARCHAR(255),
+Landmark VARCHAR(255),
+Trainschedule VARCHAR(255), pname VARCHAR(255),
+status VARCHAR(255)
+);
